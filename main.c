@@ -60,6 +60,32 @@ int loadBrandByCode(int code, Brand brands[], int length) {
     return index;
 }
 
+int loadBrandWithMoreAmountPackOfPaper(PackOfPaper packOfPapers[], Brand brands[], int lengthPackOfPapers,
+                                       int lengthBrands) {
+    int cod_brand;
+    int amountOfPackOfPaper = 0;
+    int prevAmountOfPackOfPaper = 0;
+    for (int i = 0; i < lengthBrands; i++) {
+        Brand brand = brands[i];
+        for (int j = 0; j < lengthPackOfPapers; j++) {
+            if (j == 0 && brand.cod_brand == packOfPapers[j].cod_brand) {
+                cod_brand = brand.cod_brand;
+                amountOfPackOfPaper++;
+                prevAmountOfPackOfPaper++;
+            } else if (brand.cod_brand == packOfPapers[j].cod_brand) {
+                amountOfPackOfPaper++;
+                if (prevAmountOfPackOfPaper < amountOfPackOfPaper) {
+                    cod_brand = brand.cod_brand;
+                    prevAmountOfPackOfPaper = amountOfPackOfPaper;
+                }
+            }
+        }
+        amountOfPackOfPaper = 0;
+    }
+    return loadBrandByCode(cod_brand, brands, lengthBrands);
+}
+
+
 void showBrand(Brand brand, int index) {
     printf("\n=== Marca %d ===", index + 1);
     printf("\nCodigo: %d", brand.cod_brand);
@@ -221,6 +247,17 @@ void show(PackOfPaper packOfPapers[], TypeOfPaper typeOfPapers[], Brand brands[]
     }
 }
 
+void showTheBrandThatHasTheMostPackagesOfPapers(PackOfPaper packOfPapers[], Brand brands[], int lengthPackOfPapers,
+                                                int lengthBrands) {
+    int indexOfBrandWithMorePackagesOfPapers = loadBrandWithMoreAmountPackOfPaper(packOfPapers, brands,
+                                                                                  lengthPackOfPapers, lengthBrands);
+    if (indexOfBrandWithMorePackagesOfPapers == -1) {
+        printf("Não foi possivel encontrar a marca com maior numeros de pacotes");
+    } else {
+        showBrand(brands[indexOfBrandWithMorePackagesOfPapers], indexOfBrandWithMorePackagesOfPapers);
+    }
+}
+
 int main() {
     Brand brands[LENGTH_BRANDS];
     TypeOfPaper typeOfPapers[LENGTH_TYPE_OF_PAPERS];
@@ -243,6 +280,8 @@ int main() {
                 show(packOfPapers, typeOfPapers, brands);
                 break;
             case 5:
+                showTheBrandThatHasTheMostPackagesOfPapers(packOfPapers, brands, length_vector_pack_of_paper,
+                                                           length_vector_brands);
                 break;
             case 6:
                 break;
