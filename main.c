@@ -1,4 +1,6 @@
 #include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
 
 #define LENGTH_BRANDS 10
 #define LENGTH_TYPE_OF_PAPERS 10
@@ -29,6 +31,14 @@ typedef struct pack_of_paper {
     int cod_brand;
     float price;
 } PackOfPaper;
+
+void correctionName(char index[]){
+for (int i = 0; index[i] != '\0'; i++) {
+          if (index[i] == '\n') {
+            index[i] = '\0';
+          }
+   } 
+}
 
 int loadTypeOfPaperByCode(int code, TypeOfPaper typeOfPapers[], int length) {
     int index = -1;
@@ -83,6 +93,30 @@ int loadBrandWithMoreAmountPackOfPaper(PackOfPaper packOfPapers[], Brand brands[
         amountOfPackOfPaper = 0;
     }
     return loadBrandByCode(cod_brand, brands, lengthBrands);
+}
+
+int loadSearchBrandExists(Brand brands[],int length_brands,char name_brand[]){
+  int index = 0;
+       for(int i=0;i<length_brands;i++){
+           if(strcmp(name_brand,brands[i].description) == 0){
+               index = 1;
+           }
+       }
+  return index;
+}
+
+int loadCountPackagesOfPapers(Brand brands[],PackOfPaper packOfPapers[],int length_brands,int length_pack_of_paper, int brand){
+   int index = 0;
+   for(int i=0;i<length_brands;i++){
+        for(int j=0;j<length_pack_of_paper;j++){
+          if(strcmp(brand,brands[i].description)==0){
+               if(brands[i].cod_brand == packOfPapers[j].cod_brand){
+                   index++;
+               }
+           }
+       }
+   }
+   return index;
 }
 
 
@@ -213,7 +247,7 @@ void registerPackOfPaper(PackOfPaper packOfPapers[], TypeOfPaper typeOfPapers[],
     printf("\nDigite a quantidade de folhas que o pacote possui: ");
     scanf("%d", &packOfPaper.amount_of_papers);
     setbuf(stdin, 0);
-    printf("\nDigite qual � o tamanho das folhas (A0,A1,A2,A3 ou A4) do pacote: ");
+    printf("\nDigite qual o tamanho das folhas (A0,A1,A2,A3 ou A4) do pacote: ");
     fgets(packOfPaper.amount, 4, stdin);
     do {
         printf("\nDigite o codigo da marca do pacote: ");
@@ -247,6 +281,7 @@ void show(PackOfPaper packOfPapers[], TypeOfPaper typeOfPapers[], Brand brands[]
     }
 }
 
+// FUNÇÃO PARA MOSTRAR A MARCA COM MAIS PACOTES DE PAPEIS
 void showTheBrandThatHasTheMostPackagesOfPapers(PackOfPaper packOfPapers[], Brand brands[], int lengthPackOfPapers,
                                                 int lengthBrands) {
     int indexOfBrandWithMorePackagesOfPapers = loadBrandWithMoreAmountPackOfPaper(packOfPapers, brands,
@@ -256,6 +291,42 @@ void showTheBrandThatHasTheMostPackagesOfPapers(PackOfPaper packOfPapers[], Bran
     } else {
         showBrand(brands[indexOfBrandWithMorePackagesOfPapers], indexOfBrandWithMorePackagesOfPapers);
     }
+}
+
+// FUNÇÃO PARA RETIRAR PACOTES DE PAPEIS DE ACORDO COM A PESQUISA DA MARCA
+// int loadCodePackages(int cod_paper,PackOfPaper packOfPapers[],int length_pack_of_paper){
+//   int index = 0;
+//   for(int i=0;i<length_pack_of_paper;i++){
+//       if(cod_paper == packOfPapers[i].cod_pack_of_paper){
+//         index=1;
+//       }
+//   }
+//   return index;
+// }
+void searchByBrandToRemovePackagePackages(Brand brands[],PackOfPaper packOfPapers[],int length_brands,
+                                          int length_pack_of_paper){
+   int searchBrandExists,countPackagesOfPapers,cod_paper,codePackages;
+   char name_brand[100];
+   do{
+       setbuf(stdin,0);
+       printf("\nDigite o nome da marca: ");
+       fgets(name_brand,100,stdin);
+       searchBrandExists =  loadSearchBrandExists(brands, length_brands, name_brand);
+       if (searchBrandExists == 0) {
+            printf("\nMarca nao existe! Tente novamente!\n\n");
+       }
+   }while(searchBrandExists == 0);
+   countPackagesOfPapers = loadCountPackagesOfPapers(brands,packOfPapers,length_brands,length_pack_of_paper, name_brand);
+   correctionName(name_brand);
+//    do{
+//       printf("\nA marca %s tem %d pacotes, insira o codigo do pacote a retirar: ",name_brand);
+//       scanf("%d",&cod_paper);
+//       codePackages = loadCodePackages(cod_paper,packOfPapers,length_pack_of_paper);
+//       if(codePackages == 0){
+//           printf("\nCodigo invalido! Tente novamente!\n\n");
+//       }
+//    }while(codePackages == 0);
+
 }
 
 int main() {
@@ -286,6 +357,7 @@ int main() {
             case 6:
                 break;
             case 7:
+                searchByBrandToRemovePackagePackages(brands,packOfPapers,length_vector_brands,length_vector_pack_of_paper);
                 break;
         }
     } while (option != 8);
