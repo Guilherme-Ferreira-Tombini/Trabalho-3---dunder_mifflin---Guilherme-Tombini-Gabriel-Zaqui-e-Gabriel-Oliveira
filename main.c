@@ -229,7 +229,7 @@ void registerPackOfPaper(PackOfPaper packOfPapers[], TypeOfPaper typeOfPapers[],
     length_vector_pack_of_paper++;
 }
 
-// FUN��O DE MOSTRAR OS DADOS CADASTRADOS
+// FUNÇÃO DE MOSTRAR OS DADOS CADASTRADOS
 void show(PackOfPaper packOfPapers[], TypeOfPaper typeOfPapers[], Brand brands[]) {
     printf("\n============================= MARCAS ==========================\n\n");
     for (int b = 0; b < length_vector_brands; b++) {
