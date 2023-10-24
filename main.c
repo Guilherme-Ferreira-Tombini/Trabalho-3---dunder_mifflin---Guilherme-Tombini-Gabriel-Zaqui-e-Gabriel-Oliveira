@@ -105,14 +105,12 @@ int loadSearchBrandExists(Brand brands[],int length_brands,char name_brand[]){
   return index;
 }
 
-int loadCountPackagesOfPapers(Brand brands[],PackOfPaper packOfPapers[],int length_brands,int length_pack_of_paper, int brand){
+int loadCountPackagesOfPapers(Brand brands[],PackOfPaper packOfPapers[],int length_brands,int length_pack_of_paper, char brand[]){
    int index = 0;
    for(int i=0;i<length_brands;i++){
         for(int j=0;j<length_pack_of_paper;j++){
-          if(strcmp(brand,brands[i].description)==0){
-               if(brands[i].cod_brand == packOfPapers[j].cod_brand){
-                   index++;
-               }
+          if(strncmp(brands[i].description,brand,strlen(brand))==0){
+               index++;
            }
        }
    }
@@ -294,18 +292,18 @@ void showTheBrandThatHasTheMostPackagesOfPapers(PackOfPaper packOfPapers[], Bran
 }
 
 // FUNÇÃO PARA RETIRAR PACOTES DE PAPEIS DE ACORDO COM A PESQUISA DA MARCA
-// int loadCodePackages(int cod_paper,PackOfPaper packOfPapers[],int length_pack_of_paper){
-//   int index = 0;
-//   for(int i=0;i<length_pack_of_paper;i++){
-//       if(cod_paper == packOfPapers[i].cod_pack_of_paper){
-//         index=1;
-//       }
-//   }
-//   return index;
-// }
+int loadRemovePackages(int cod_paper,PackOfPaper packOfPapers[],int length_pack_of_paper){
+  int index = 0;
+  for(int i=0;i<length_pack_of_paper;i++){
+      if(cod_paper == packOfPapers[i].cod_pack_of_paper){
+        index=1;
+      }
+  }
+  return index;
+}
 void searchByBrandToRemovePackagePackages(Brand brands[],PackOfPaper packOfPapers[],int length_brands,
                                           int length_pack_of_paper){
-   int searchBrandExists,countPackagesOfPapers,cod_paper,codePackages;
+   int searchBrandExists,countPackagesOfPapers,cod_paper,removePackages;
    char name_brand[100];
    do{
        setbuf(stdin,0);
@@ -318,14 +316,14 @@ void searchByBrandToRemovePackagePackages(Brand brands[],PackOfPaper packOfPaper
    }while(searchBrandExists == 0);
    countPackagesOfPapers = loadCountPackagesOfPapers(brands,packOfPapers,length_brands,length_pack_of_paper, name_brand);
    correctionName(name_brand);
-//    do{
-//       printf("\nA marca %s tem %d pacotes, insira o codigo do pacote a retirar: ",name_brand);
-//       scanf("%d",&cod_paper);
-//       codePackages = loadCodePackages(cod_paper,packOfPapers,length_pack_of_paper);
-//       if(codePackages == 0){
-//           printf("\nCodigo invalido! Tente novamente!\n\n");
-//       }
-//    }while(codePackages == 0);
+   do{
+      printf("\nA marca %s tem %d pacotes, insira o codigo do pacote a retirar: ",name_brand, countPackagesOfPapers);
+      scanf("%d",&cod_paper);
+      removePackages = loadRemovePackages(cod_paper,packOfPapers,length_pack_of_paper);
+      if(removePackages == 0){
+          printf("\nCodigo invalido! Tente novamente!\n\n");
+      }
+   }while(removePackages == 0);
 
 }
 
