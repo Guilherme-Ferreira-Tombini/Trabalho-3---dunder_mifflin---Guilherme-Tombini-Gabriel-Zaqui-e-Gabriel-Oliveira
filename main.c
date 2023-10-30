@@ -331,6 +331,35 @@ void searchByBrandToRemovePackagePackages(Brand brands[], PackOfPaper packOfPape
 
 }
 
+//Funcao calcula preço total pacotes
+float calculateTotalPrice(PackOfPaper packOfPapers[], int length_pack_of_paper) {
+    float total = 0;
+    for (int i = 0; i < length_pack_of_paper; i++) {
+        total += packOfPapers[i].price;
+    }
+    return total;
+}
+
+//Funcao que conta pacotes por marca
+void countPackagesByBrand(PackOfPaper packOfPapers[], Brand brands[], int length_pack_of_paper, int length_brands) {
+    int brandCount[length_brands];
+    for (int i = 0; i < length_brands; i++) {
+        brandCount[i] = 0;
+    }
+
+    for (int i = 0; i < length_pack_of_paper; i++) {
+        int brandIndex = loadBrandByCode(packOfPapers[i].cod_brand, brands, length_brands);
+        if (brandIndex != -1) {
+            brandCount[brandIndex]++;
+        }
+    }
+
+    printf("=== Quantidade de pacotes por marca ===\n");
+    for (int i = 0; i < length_brands; i++) {
+        printf("%s: %d pacotes\n", brands[i].description, brandCount[i]);
+    }
+}
+
 int main() {
     Brand brands[LENGTH_BRANDS];
     TypeOfPaper typeOfPapers[LENGTH_TYPE_OF_PAPERS];
@@ -358,6 +387,8 @@ int main() {
                                                            length_vector_brands);
                 break;
             case 6:
+                printf("\nPreco total dos pacotes: R$%.2f\n", calculateTotalPrice(packOfPapers, length_vector_pack_of_paper));
+                countPackagesByBrand(packOfPapers, brands, length_vector_pack_of_paper, length_vector_brands);
                 break;
             case 7:
                 searchByBrandToRemovePackagePackages(brands, packOfPapers, length_vector_brands,
