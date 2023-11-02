@@ -293,19 +293,11 @@ void removePackage(int cod_paper, PackOfPaper packOfPapers[], int length_pack_of
         packOfPapers[i] = remover[i];
     }
     length_vector_pack_of_paper--;
-    for (int i = 0; i < length_vector_pack_of_paper; i++) {
-        printf("\nCodigo pacote: %d", remover[i].cod_pack_of_paper);
-        printf("\nMarca: %d", remover[i].cod_brand);
-        printf("\nTipo: %d", remover[i].cod_type_of_paper);
-        printf("\nQuantidade: %d", remover[i].amount_of_papers);
-        printf("\nPreco: %.2f", remover[i].price);
-        printf("\n\n");
-    }
 }
 
 void searchByBrandToRemovePackagePackages(Brand brands[], PackOfPaper packOfPapers[], int length_brands,
                                           int length_pack_of_paper) {
-    int cod_paper;
+    int cod_paper,ident;
     int isBrandExists, isPackagesExists;
     char name_brand[100];
     do {
@@ -317,18 +309,24 @@ void searchByBrandToRemovePackagePackages(Brand brands[], PackOfPaper packOfPape
             printf("\nMarca nao existe! Tente novamente!\n\n");
         }
     } while (isBrandExists == -1);
-    correctionName(name_brand);
+    //correctionName(name_brand);
     do {
         printf("\nInsira o codigo do pacote a retirar: ");
         scanf("%d", &cod_paper);
         isPackagesExists = loadPackOfPaperByCode(cod_paper, packOfPapers, length_pack_of_paper);
+        ident = 0;
         if (isPackagesExists == -1) {
             printf("\nCodigo invalido! Tente novamente!\n\n");
         } else {
-            removePackage(cod_paper, packOfPapers, length_pack_of_paper);
+            int brandIndex = loadBrandByCode(packOfPapers[isPackagesExists].cod_brand, brands, length_brands);
+             if (strcmp(name_brand, brands[brandIndex].description) == 0) {
+                removePackage(cod_paper, packOfPapers, length_pack_of_paper);
+             } else {
+                 ident = 1;
+                printf("\nCodigo nao condizente com a marca! Tente novamente!\n\n");
+             }
         }
-    } while (isPackagesExists == -1);
-
+    }while(isPackagesExists == -1 || ident == 1);
 }
 
 //Funcao calcula preço total pacotes
