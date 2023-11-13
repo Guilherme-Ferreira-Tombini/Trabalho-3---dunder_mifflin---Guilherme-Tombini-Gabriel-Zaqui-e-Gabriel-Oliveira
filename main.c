@@ -98,6 +98,7 @@ int loadBrandWithMoreAmountPackOfPaper(PackOfPaper packOfPapers[], Brand brands[
 int searchBrandByName(Brand brands[], int length_brands, char name_brand[]) {
     int index = -1;
     for (int i = 0; i < length_brands; i++) {
+        correctionName(brands[i].description);
         if (strcmp(name_brand, brands[i].description) == 0) {
             return i;
         }
@@ -146,9 +147,9 @@ void showPackOfPaper(PackOfPaper packOfPaper, TypeOfPaper typeOfPapers[], Brand 
     setbuf(stdin, 0);
     printf("\nTamanho das folhas: %s", packOfPaper.amount);
     int brand = loadBrandByCode(packOfPaper.cod_brand, brands, lengthBrands);
-
+    correctionName(brands[brand].description);
     printf("Descricao da marca: %s", brands[brand].description);
-    printf("Preco: R$%.2f", packOfPaper.price);
+    printf("\nPreco: R$%.2f", packOfPaper.price);
 
     printf("\n\n");
 }
@@ -304,12 +305,13 @@ void searchByBrandToRemovePackagePackages(Brand brands[], PackOfPaper packOfPape
         setbuf(stdin, 0);
         printf("\nDigite o nome da marca: ");
         fgets(name_brand, 100, stdin);
+        correctionName(name_brand);
         isBrandExists = searchBrandByName(brands, length_brands, name_brand);
         if (isBrandExists == -1) {
             printf("\nMarca nao existe! Tente novamente!\n\n");
         }
     } while (isBrandExists == -1);
-    //correctionName(name_brand);
+
     do {
         printf("\nInsira o codigo do pacote a retirar: ");
         scanf("%d", &cod_paper);
