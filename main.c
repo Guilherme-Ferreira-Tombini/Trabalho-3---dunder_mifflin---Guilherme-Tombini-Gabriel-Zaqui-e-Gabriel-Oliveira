@@ -385,7 +385,7 @@ int main() {
                                                            length_vector_brands);
                 break;
             case 6:
-                printf("\nPreco total dos pacotes: R$%.2f\n", calculateTotalPrice(packOfPapers, length_vector_pack_of_paper));
+                printf("\nPreco total dos pacotes: R$%.2f", calculateTotalPrice(packOfPapers, length_vector_pack_of_paper));
                 countPackagesByBrand(packOfPapers, brands, length_vector_pack_of_paper, length_vector_brands);
                 break;
             case 7:
