@@ -354,7 +354,8 @@ void countPackagesByBrand(PackOfPaper packOfPapers[], Brand brands[], int length
 
     printf("=== Quantidade de pacotes por marca ===\n");
     for (int i = 0; i < length_brands; i++) {
-        printf("%s: %d pacotes", brands[i].description, brandCount[i]);
+        correctionName(brands[i].description);
+        printf("%s: %d pacotes\n",brands[i].description, brandCount[i]);
     }
 }
 
