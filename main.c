@@ -117,7 +117,6 @@ int getOptionBetweenARange(int start, int end) {
     int option;
     do {
         scanf("%d", &option);
-        printf("%d",(int)(option < start || option > end));
     } while (option < start || option > end);
     return option;
 }
