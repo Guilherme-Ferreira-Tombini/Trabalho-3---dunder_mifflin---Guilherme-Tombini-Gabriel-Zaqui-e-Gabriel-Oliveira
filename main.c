@@ -148,7 +148,7 @@ void showPackOfPaper(PackOfPaper packOfPaper, TypeOfPaper typeOfPapers[], Brand 
     printf("\nTamanho das folhas: %s", packOfPaper.amount);
     int brand = loadBrandByCode(packOfPaper.cod_brand, brands, lengthBrands);
     correctionName(brands[brand].description);
-    printf("Descricao da marca: %s", brands[brand].description);
+    printf("\nDescricao da marca: %s", brands[brand].description);
     printf("\nPreco: R$%.2f", packOfPaper.price);
 
     printf("\n\n");
