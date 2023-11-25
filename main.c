@@ -27,7 +27,7 @@ typedef struct pack_of_paper {
     int cod_pack_of_paper;
     int cod_type_of_paper;
     int amount_of_papers;
-    char amount[4];
+    char amount[2];
     int cod_brand;
     float price;
 } PackOfPaper;
@@ -234,7 +234,7 @@ void registerPackOfPaper(PackOfPaper packOfPapers[], TypeOfPaper typeOfPapers[],
     scanf("%d", &packOfPaper.amount_of_papers);
     setbuf(stdin, 0);
     printf("\nDigite qual o tamanho das folhas (A0,A1,A2,A3 ou A4) do pacote: ");
-    fgets(packOfPaper.amount, 4, stdin);
+    fgets(packOfPaper.amount, 2, stdin);
     do {
         printf("\nDigite o codigo da marca do pacote: ");
         scanf("%d", &packOfPaper.cod_brand);
