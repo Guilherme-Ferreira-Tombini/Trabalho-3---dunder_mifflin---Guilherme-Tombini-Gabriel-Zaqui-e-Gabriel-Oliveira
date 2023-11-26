@@ -274,7 +274,7 @@ void showTheBrandThatHasTheMostPackagesOfPapers(PackOfPaper packOfPapers[], Bran
     int indexOfBrandWithMorePackagesOfPapers = loadBrandWithMoreAmountPackOfPaper(packOfPapers, brands,
                                                                                   lengthPackOfPapers, lengthBrands);
     if (indexOfBrandWithMorePackagesOfPapers == -1) {
-        printf("Não foi possivel encontrar a marca com maior numeros de pacotes");
+        printf("Nao foi possivel encontrar a marca com maior numeros de pacotes");
     } else {
         showBrand(brands[indexOfBrandWithMorePackagesOfPapers], indexOfBrandWithMorePackagesOfPapers);
     }
